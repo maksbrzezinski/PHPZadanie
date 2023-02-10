@@ -8,7 +8,7 @@
 require_once 'config.php';
 
 // Create connection
-$conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+$conn = new mysqli($serverName, $dbUserName, $dbPassword, $dbName);
 
 // Check connection
 if ($conn->connect_error) {

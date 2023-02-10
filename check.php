@@ -19,7 +19,7 @@ if (isset($_POST['submit_login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+    $conn = new mysqli($serverName, $dbUserName, $dbPassword, $dbName);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);

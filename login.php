@@ -1,63 +1,64 @@
 <?php
-  // Start session
-  session_start();
-
-  // Check if the form was submitted
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // Check if both fields are filled in
-    if (!empty($_POST['email']) && !empty($_POST['password'])) {
-
-      // Get the data from the form
-      $email = mysqli_real_escape_string($conn, $_POST['email']);
-      $password = mysqli_real_escape_string($conn, $_POST['password']);
-
-      $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
-
-      if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-      }
-
-      // Search for the user in the database
-      $sql = "SELECT * FROM users WHERE email = '$email'";
-      $result = mysqli_query($conn, $sql);
-      $user = mysqli_fetch_assoc($result);
-
-      // If the user exists
-      if ($user) {
-        // Verify the password
-        if (password_verify($password, $user['password'])) {
-          // Login success
-          $_SESSION['user_id'] = $user['id'];
-          header('location: welcome.php');
-          exit;
-        } else {
-          // Login failed
-          $error = 'Incorrect password';
-        }
-      } else {
-        // Login failed
-        $error = 'Incorrect email';
-      }
-    } else {
-      // Login failed
-      $error = 'Please fill in both fields';
-    }
-  }
+   error_reporting(E_ALL);
+   ini_set('display_errors', 1);
 ?>
 
-<!-- Login form -->
-<form action="login.php" method="post">
-  <label for="email">Email:</label>
-  <input type="email" name="email" id="email">
-  <br>
-  <label for="password">Password:</label>
-  <input type="password" name="password" id="password">
-  <br>
-  <button type="submit">Login</button>
-</form>
+<?php
+session_start();
 
-<!-- Error message -->
-<?php if (isset($error)): ?>
-  <p><?php echo $error; ?></p>
-<?php endif; ?>
+require_once 'config.php';
+
+// Check if the user is already logged in
+if (isset($_SESSION['user_id'])) {
+    header('Location: dashboard.php');
+    exit;
+}
+
+// Check if the user has submitted the login form
+if (isset($_POST['submitLogin'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $conn = new mysqli($serverName, $dbUserName, $dbPassword, $dbName);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            header('Location: dashboard.php');
+            exit;
+        } else {
+            $loginError = 'Incorrect password';
+        }
+    } else {
+        $loginError = 'Email not found';
+    }
+
+    $conn->close();
+}
+?>
+
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <?php if (isset($loginError)) { echo '<p style="color: red;">' . $loginError . '</p>'; } ?>
+    <form method="post">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" name="submitLogin" value="Login">
+    </form>
+
+    <p>If you are not registered click the button below to register.</p>
+    <a href="register.php"><button>Register</button></a>
+</body>
+</html>

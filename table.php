@@ -7,7 +7,7 @@
 require_once 'config.php';
 
 
-   $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+   $conn = new mysqli($serverName, $dbUserName, $dbPassword, $dbName);
 
    if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
