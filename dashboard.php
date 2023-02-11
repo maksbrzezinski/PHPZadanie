@@ -1,3 +1,5 @@
+<!-- This file shows after login and allows a user to change a password and/or name  -->
+
 <?php
    error_reporting(E_ALL);
    ini_set('display_errors', 1);
@@ -8,7 +10,7 @@
 require_once 'config.php';
 $conn = new mysqli($serverName, $dbUserName, $dbPassword, $dbName);
 
-// Get the user's id from the session
+// Get the user's id
 session_start();
 $user_id = $_SESSION["user_id"];
 

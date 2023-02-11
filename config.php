@@ -1,3 +1,5 @@
+<!-- Database connection details -->
+
 <?php
    $serverName = "localhost";
    $dbUserName = "root";

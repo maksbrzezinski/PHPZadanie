@@ -1,3 +1,5 @@
+<!-- This file displays a list of users' IDs and a button to reveal their details  -->
+
 <?php
    error_reporting(E_ALL);
    ini_set('display_errors', 1);
