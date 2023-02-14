@@ -1,5 +1,3 @@
-<!-- This file displays a list of dates from today until the end of the year -->
-
 <?php
    date_default_timezone_set('UTC');
    $today = new DateTime();

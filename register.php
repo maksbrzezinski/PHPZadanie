@@ -1,5 +1,3 @@
-<!-- This file registers a user to the database -->
-
 <?php
    error_reporting(E_ALL);
    ini_set('display_errors', 1);
@@ -10,7 +8,7 @@ session_start();
 
 require_once 'config.php';
 
-// Check if the user has submitted the registration form
+
 if (isset($_POST['submitRegister'])) {
     $email = $_POST['email'];
     $login = $_POST['login'];

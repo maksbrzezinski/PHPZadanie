@@ -1,5 +1,3 @@
-<!-- This file adds 'users' table to the database  -->
-
 <?php
    error_reporting(E_ALL);
    ini_set('display_errors', 1);
@@ -7,7 +5,6 @@
 
 <?php
 require_once 'config.php';
-
 
    $conn = new mysqli($serverName, $dbUserName, $dbPassword, $dbName);
 
